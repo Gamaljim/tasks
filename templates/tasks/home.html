@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>TASKS</h1>
+    {{results}}
+    <table>
+        <th>title</th>
+        <th>description</th>
+        <th>created_at</th>
+        <th>status</th>
+        <th>completed_at</th>
+
+        {% for task in tasks%}
+        <tr>
+            <td>
+                <a href="{% url 'view' pk=task.id %}">{{task.title}}</a>
+            </td>
+            <td>{{task.description}}</td>
+            <td>{{task.created_at|date:"jS F Y"}}</td>
+            <td>{{task.status}}</td>
+            <td>{{task.completed_at|date:"jS F"}}</td>
+        </tr>
+        {%endfor %}
+    </table>
+</body>
+</html>
+
+
+<body>
+    <h1>DONE TASKS</h1>
+    {{results}}
+    <table>
+        <th>title</th>
+        <th>description</th>
+        <th>created_at</th>
+        <th>status</th>
+        <th>completed_at</th>
+
+        {% for task in done_tasks%}
+        <tr>
+            <td>
+                <a href="{}">{{task.title}}</a>
+            </td>
+            <td>{{task.description}}</td>
+            <td>{{task.created_at|date:"jS F Y"}}</td>
+            <td>{{task.status}}</td>
+            <td>{{task.completed_at|date:"jS F"}}</td>
+        </tr>
+        {%endfor %}
+    </table>
+</body>
+
+
+<h1>Done 3 days ago TASKS</h1>
+{{results}}
+<table>
+    <th>title</th>
+    <th>description</th>
+    <th>created_at</th>
+    <th>status</th>
+    <th>completed_at</th>
+
+    {% for task in three_days_ago%}
+    <tr>
+        <td>{{task.title}}</td>
+        <td>{{task.description}}</td>
+        <td>{{task.created_at|date:"jS F Y"}}</td>
+        <td>{{task.status}}</td>
+        <td>{{task.completed_at|date:"jS F"}}</td>
+    </tr>
+    {%endfor %}
+</table>
+
+<h1>Tasks Created Today</h1>
+{{results}}
+<table>
+    <th>title</th>
+    <th>description</th>
+    <th>created_at</th>
+    <th>status</th>
+    <th>completed_at</th>
+
+    {% for task in created_today%}
+    <tr>
+        <td>{{task.title}}</td>
+        <td>{{task.description}}</td>
+        <td>{{task.created_at|date:"jS F Y"}}</td>
+        <td>{{task.status}}</td>
+        <td>{{task.completed_at|date:"jS F"}}</td>
+    </tr>
+    {%endfor %}
+</table>
