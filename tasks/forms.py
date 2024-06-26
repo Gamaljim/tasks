@@ -1,5 +1,5 @@
 from django import forms
-from .models import Task
+from .models import Task, SubTask
 
 class TaskForm(forms.Form):
     title = forms.CharField(max_length=250)
@@ -13,5 +13,25 @@ class TaskUpdateForm(forms.ModelForm):
             "title",
             "description",
             "completed_at",
+            "status"
+        ]
+
+
+class SubTaskForm(forms.ModelForm):
+    class Meta:
+        model = SubTask
+        fields = [
+            "title",
+            "description",
+            "related_task"
+        ]
+
+
+class SubTaskUpdateForm(forms.ModelForm):
+    class Meta:
+        model = SubTask
+        fields = [
+            "title",
+            "description",
             "status"
         ]

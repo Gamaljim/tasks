@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>VIEW SUB TASK</h1>
+
+    <li>{{sub_task.title}}</li>
+    <li>{{sub_task.description}}</li>
+    <li>{{sub_task.status}}</li>
+
+    <form action="" method="POST">
+        {% csrf_token %}
+        {{form}}
+        <input type="submit" value="UPDATE SUBTASK">
+    </form>
+
+    <a href="{% url 'delete_sub_task' sub_task.id%}"><input type="submit" value="DELETE SUBTASK">
+    </a>
+</body>
+</html>

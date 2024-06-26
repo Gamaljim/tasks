@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
-from .models import Task
-from .forms import TaskForm , TaskUpdateForm
+from .models import Task, SubTask
+from .forms import TaskForm , TaskUpdateForm, SubTaskForm, SubTaskUpdateForm
 
 from django.utils import timezone
 from datetime import timedelta
@@ -45,6 +45,7 @@ def create_task(request):
 def get_task(request, pk):
 
     task = Task.objects.get(id=pk)
+    # sub_tasks = SubTask.objects.filter(related_task=task)
     if request.method == 'POST':
         form = TaskUpdateForm(request.POST, instance=task)
         if form.is_valid():
@@ -52,7 +53,7 @@ def get_task(request, pk):
     else:
         form = TaskUpdateForm(instance=task)
 
-    return render(request, 'tasks/view_task.html', {'task':task, "form":form})
+    return render(request, 'tasks/view_task.html', {'task':task, "form":form, 'items':task.items.all()})
 
 
 
@@ -61,3 +62,38 @@ def delete_task(request, pk):
     task = Task.objects.get(id = pk)
     task.delete()
     return redirect('home')
+
+
+
+
+#CREATING CRUD FOR SUB-TASK
+def create_sub_task(request):
+    #C
+    if request.method == "POST":
+        form = SubTaskForm(request.POST)
+        if form.is_valid():
+            new_sub_task= form.save()
+            return redirect('view', pk=new_sub_task.related_task.id)
+    else:
+        form = SubTaskForm()
+
+    return render(request, "tasks/add_sub_task.html", {"sub_form":form})
+
+
+
+def get_sub_task(request, pk):
+    sub_task = SubTask.objects.get(id=pk)
+    if request.method == 'POST':
+        form = SubTaskUpdateForm(request.POST, instance=sub_task)
+        if form.is_valid():
+            form.save()
+    else:
+        form = SubTaskUpdateForm(instance=sub_task)
+
+    return render(request , "tasks/view_subtask.html", {'sub_task':sub_task, 'form':form})
+
+def delete_sub_task(request, pk):
+    sub_task = SubTask.objects.get(id=pk)
+    task = sub_task.related_task.id
+    sub_task.delete()
+    return redirect('view', pk=task)

@@ -14,6 +14,19 @@
         <li>{{task.status}}</li>
     </ul>
 
+    <h1>VIEW SUB_TASK</h1>
+    <p>The sub-Task is:</p>
+    <ul>
+        {% for sub_task in items %}
+        
+        <li><a href="{%url 'view_sub_task' sub_task.pk %}">{{sub_task.title}}</a></li>
+        <li>{{sub_task.description}}</li>
+        <li>{{sub_task.status}}</li>
+        {% endfor %}
+    </ul>
+
+
+
     <h1>UPDATE TASK</h1>
 
     <form action="" method="post">
